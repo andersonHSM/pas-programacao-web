@@ -9,6 +9,7 @@ class Locations extends Model {
   latitude!: number;
   longitude!: number;
   type!: string;
+  active!: boolean;
 
   createdAt!: Date;
   updatedAt!: Date;
@@ -21,6 +22,10 @@ Locations.init(
     longitude: Sequelize.FLOAT,
     type: Sequelize.STRING,
     adress: Sequelize.STRING,
+    active: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true,
+    },
   },
   { sequelize, tableName: 'Locations' }
 );

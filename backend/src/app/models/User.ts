@@ -13,6 +13,7 @@ import Locations from './Locations';
 import { HasManyGetAssociationsMixin } from 'sequelize';
 
 class Users extends Model {
+  id!: number;
   name!: string;
   password!: string;
   password_hash!: string;

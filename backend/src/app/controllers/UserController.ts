@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import Users from '../models/User';
 
+import { SignedRequest } from '../interfaces/SignedRequest';
+import Locations from '../models/Locations';
+
 class UserController {
   async store(req: Request, res: Response) {
     const previousUser = await Users.findOne({
@@ -19,6 +22,26 @@ class UserController {
     }
 
     return res.status(200).json({ user });
+  }
+
+  async listUserLocale(req: SignedRequest, res: Response) {
+    const { id: paramId } = req.params;
+
+    const user = await Users.findAll({
+      where: { id: paramId },
+      attributes: ['id', 'name', 'email'],
+      order: [['locations', 'id', 'asc']], // ordenação do relacionamento 'locations'
+      include: [
+        {
+          model: Locations,
+          where: { user_id: paramId },
+          as: 'locations',
+          attributes: ['id', 'name', 'latitude', 'longitude', 'type', 'adress'],
+        },
+      ],
+    });
+
+    return res.json({ user });
   }
 }
 
