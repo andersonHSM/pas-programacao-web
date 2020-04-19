@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   frontend:
     image: pasfront:1.0.0
@@ -18,3 +17,37 @@ services:
     volumes:
       - ./backend/:/usr/src/app
     command: yarn start:dev
+    depends_on:
+      - db
+    networks:
+      - db
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 123
+    volumes:
+      - ./db/pgdata/:/var/lib/postgresql/data/
+    networks:
+      - db
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: anderson@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 123
+      POSTGRES_DB: pas
+    ports:
+      - 5050:80
+    depends_on:
+      - db
+    volumes:
+      - ./db/pgadmin/:/var/lib/pgadmin
+    networks:
+      - db
+
+networks:
+  db:
