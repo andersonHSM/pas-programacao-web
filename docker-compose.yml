@@ -4,23 +4,23 @@ services:
     image: pasfront:1.0.0
     # build:
     # context: ./frontend
+    restart: always
     ports:
       - 4200:4200
     volumes:
       - ./frontend/:/usr/src/app
     command: npm run start
-    networks:
-      - default
 
   backend:
     image: pasback:1.0.0
     # build:
     # context: ./backend
+    restart: always
     ports:
       - 8000:8000
     volumes:
       - ./backend/:/usr/src/app
-    command: yarn start:dev
+    command: bash -c "yarn sequelize-cli db:migrate && yarn start:dev"
     depends_on:
       - db
     networks:
@@ -28,30 +28,34 @@ services:
 
   db:
     image: postgres
+    # build:
+    # context: ./database
     restart: always
     ports:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: 123
+      POSTGRES_DB: pasprogweb
     volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./db/pgdata/:/var/lib/postgresql/data/
     networks:
       - db
 
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: anderson@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: 123
-      POSTGRES_DB: pas
-    ports:
-      - 5050:80
-    depends_on:
-      - db
-    volumes:
-      - ./db/pgadmin/:/var/lib/pgadmin
-    networks:
-      - db
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: anderson@gmail.com
+  #     PGADMIN_DEFAULT_PASSWORD: 123
+  #     POSTGRES_DB: pas
+  #   ports:
+  #     - 5050:80
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - ./db/pgadmin/:/var/lib/pgadmin
+  #   networks:
+  #     - db
 
 networks:
   db:
