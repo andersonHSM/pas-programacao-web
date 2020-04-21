@@ -2,6 +2,8 @@ version: '3'
 services:
   frontend:
     image: pasfront:1.0.0
+    # build:
+    # context: ./frontend
     ports:
       - 4200:4200
     volumes:
@@ -12,6 +14,8 @@ services:
 
   backend:
     image: pasback:1.0.0
+    # build:
+    # context: ./backend
     ports:
       - 8000:8000
     volumes:
