@@ -1,0 +1,11 @@
+@import '../../../../variables';
+.map {
+  width: 300px;
+  height: 300px;
+}
+
+:host {
+  width: 100%;
+  height: fit-content;
+  overflow: hidden;
+}
