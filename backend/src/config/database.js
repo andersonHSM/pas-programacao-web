@@ -1,5 +1,5 @@
 module.exports = {
-  database: 'pas-prog-web',
+  database: 'pasprogweb',
   username: 'postgres',
   password: '123',
   host: 'db',

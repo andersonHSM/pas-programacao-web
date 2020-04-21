@@ -15,8 +15,10 @@ routes.get('/locations/', LocationController.index);
 
 routes.use(authMiddleware);
 
-routes.post('/locations/', LocationController.store);
-
 routes.get('/user/:id/locations/', UserController.listUserLocale);
+
+routes.post('/locations/', LocationController.store);
+routes.patch('/locations/:id/', LocationController.update);
+routes.delete('/locations/:id/', LocationController.delete);
 
 export { routes };

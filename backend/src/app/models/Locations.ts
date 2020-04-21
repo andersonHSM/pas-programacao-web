@@ -5,6 +5,7 @@ import { sequelize } from '../../database';
 import Users from './User';
 
 class Locations extends Model {
+  user_id!: number;
   name!: string;
   latitude!: number;
   longitude!: number;
@@ -26,6 +27,7 @@ Locations.init(
       type: Sequelize.BOOLEAN,
       defaultValue: true,
     },
+    user_id: Sequelize.NUMBER,
   },
   { sequelize, tableName: 'Locations' }
 );
