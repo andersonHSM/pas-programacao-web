@@ -31,7 +31,7 @@ export class LocationsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.mapInitializer();
+    // this.mapInitializer();
   }
 
   mapInitializer() {

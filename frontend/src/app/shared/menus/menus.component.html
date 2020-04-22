@@ -1,3 +1,11 @@
-<mat-toolbar class="toolbar">
-  <mat-toolbar-row color="primary"></mat-toolbar-row>
+<mat-toolbar class="toolbar" color="primary">
+  <mat-toolbar-row>
+    <button mat-button [disableRipple]="true">Trash Mapper</button>
+
+    <div class="menu-actions">
+      <a color="accent" [routerLink]="['/login']" mat-raised-button>
+        Acessar
+      </a>
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>
