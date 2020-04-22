@@ -41,9 +41,19 @@ class LocationController {
     const { page, limit } = paginatorParams(req);
 
     const locationsList = await Locations.findAll({
+      where: { active: true },
       offset: (page - 1) * limit,
       limit: limit,
       order: ['id'],
+      attributes: [
+        'id',
+        'name',
+        'type',
+        'longitude',
+        'latitude',
+        'adress',
+        'user_id',
+      ],
     });
 
     return res.status(200).json({ locationsList });
