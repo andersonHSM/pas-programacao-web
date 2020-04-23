@@ -1,1 +1,26 @@
-<p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+  <div fxLayout="column wrap" fxFlex="75" fxFlex.lt-sm="100" class="cont">
+    <mat-form-field fxFlex="1 1 100" color="primary">
+      <mat-label>E-mail</mat-label>
+      <input formControlName="email" type="email" matInput />
+      <mat-error>Campo obrigatório</mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="1 1 100" color="primary">
+      <mat-label>Senha</mat-label>
+      <input formControlName="password" type="password" matInput />
+      <mat-error>Campo obrigatório</mat-error>
+    </mat-form-field>
+    <div fxLayout="row">
+      <button
+        type="submit"
+        id="login-button"
+        color="primary"
+        fxFlexAlign="center"
+        mat-raised-button
+      >
+        Login
+      </button>
+    </div>
+  </div>
+</form>

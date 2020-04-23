@@ -17,11 +17,9 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'login',
+        path: 'auth',
         loadChildren: () =>
-          import('./auth/login/login.module').then(
-            (module) => module.LoginModule
-          ),
+          import('./auth/auth.module').then((module) => module.AuthModule),
       },
     ],
   },
