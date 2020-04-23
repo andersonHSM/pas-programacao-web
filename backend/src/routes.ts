@@ -7,11 +7,6 @@ import { authMiddleware } from './app/middlewares/AuthMiddleware';
 
 const routes = Router();
 
-routes.use((req: Request, res: Response, next: NextFunction) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  return next();
-});
-
 routes.post('/users/', UserController.store);
 
 routes.post('/login/', sessionController.store);
