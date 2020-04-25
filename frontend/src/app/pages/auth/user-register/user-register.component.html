@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+<form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
   <div
     fxLayout="column"
     fxLayoutAlign="center"
@@ -7,6 +7,12 @@
     class="cont"
     fxLayoutGap="10px"
   >
+    <mat-form-field fxFlex="1 1 100" color="primary">
+      <mat-label>Seu nome</mat-label>
+      <input formControlName="name" type="text" matInput />
+      <mat-error>Campo obrigatório</mat-error>
+    </mat-form-field>
+
     <mat-form-field fxFlex="1 1 100" color="primary">
       <mat-label>E-mail</mat-label>
       <input formControlName="email" type="email" matInput />
@@ -18,11 +24,13 @@
       <input formControlName="password" type="password" matInput />
       <mat-error>Campo obrigatório</mat-error>
     </mat-form-field>
-    <div *ngIf="loginError" fxLayout="column wrap" fxLayoutAlign="center">
+
+    <div *ngIf="registerError" fxLayout="column wrap" fxLayoutAlign="center">
       <small fxFlexAlign="center" style="color: darkred;">
-        {{ loginError.error }}
+        {{ registerError.error }}
       </small>
     </div>
+
     <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center stretch">
       <div fxLayout="row" fxLayoutAlign="center">
         <button
@@ -31,13 +39,14 @@
           fxFlex="0 1 40"
           fxFlexAlign="center"
           mat-raised-button
-          [disabled]="loginForm.invalid"
+          [disabled]="registerForm.invalid"
         >
-          Login
+          Cadastrar
         </button>
       </div>
-      <div fxLayout="row" fxLayoutAlign="center">
-        <a mat-stroked-button routerLink="../cadastro">Cadastre-se</a>
+      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="10px">
+        <a mat-stroked-button routerLink="../login">Login</a>
+        <a mat-stroked-button routerLink="">Início</a>
       </div>
     </div>
   </div>

@@ -7,30 +7,34 @@
   fxLayoutAlign.lt-md="center"
   #cardsContainer
 >
-  <!-- <ng-template #cardsContainer></ng-template> -->
-
-  <ng-container *ngFor="let location of locationsList">
-    <div
-      #listItem
-      class="card-wrapper"
-      fxFlex="0 1 calc(33% - 20px)"
-      fxFlex.lt-md="0 1 calc(50% - 20px)"
-      fxFlex.lt-sm="0 1 calc(100% - 20px)"
-    >
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>
-            {{ location.name }}
-          </mat-card-title>
-          <mat-card-subtitle>
-            {{ location.adress }}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <!-- <mat-divider></mat-divider> -->
-        <mat-card-content>
-          <div [attr.id]="'map-place-' + location.id" class="map"></div>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <ng-container *ngIf="locationsList; else emptyMessage">
+    <ng-container *ngFor="let location of locationsList">
+      <div
+        #listItem
+        class="card-wrapper"
+        fxFlex="0 1 calc(33% - 20px)"
+        fxFlex.lt-md="0 1 calc(50% - 20px)"
+        fxFlex.lt-sm="0 1 calc(100% - 20px)"
+      >
+        <mat-card class="card">
+          <mat-card-header>
+            <mat-card-title>
+              {{ location.name }}
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ location.adress }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <!-- <mat-divider></mat-divider> -->
+          <mat-card-content>
+            <div [attr.id]="'map-place-' + location.id" class="map"></div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </ng-container>
   </ng-container>
 </div>
+
+<ng-template #emptyMessage>
+  <span>Não existem locais cadastrados</span>
+</ng-template>

@@ -2,10 +2,26 @@
   <mat-toolbar-row>
     <button mat-button [disableRipple]="true">Trash Mapper</button>
 
-    <div class="menu-actions">
-      <a color="accent" [routerLink]="['/auth']" mat-raised-button>
-        Acessar
-      </a>
-    </div>
+    <ng-container *ngIf="!loggedUserInfo">
+      <div class="menu-actions">
+        <a color="accent" [routerLink]="['/auth']" mat-raised-button>
+          Acessar
+        </a>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="loggedUserInfo">
+      <div class="menu-actions" fxLayout="row" fxLayoutGap="10px">
+        <button mat-button [matMenuTriggerFor]="userMenu">
+          {{ loggedUserInfo.name }}
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </div>
+    </ng-container>
   </mat-toolbar-row>
 </mat-toolbar>
+
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item>Meus locais</button>
+  <button mat-menu-item (click)="logout()">Sair</button>
+</mat-menu>

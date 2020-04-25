@@ -27,6 +27,7 @@ export class LocationsViewComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.locationsService.getLocations().subscribe((list) => {
+      if (!list || list.locationsList.length === 0) return;
       this.locationsList = list.locationsList;
       this.changeDetectorRef.detectChanges();
       this.initMap(this.locationsList);
