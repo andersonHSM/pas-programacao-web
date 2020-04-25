@@ -6,6 +6,8 @@ import { tokenSecurityKey } from '../../config/auth';
 
 import { SignedRequest } from '../interfaces/SignedRequest';
 
+import JwtBlacklist from '../models/JwtBlacklist';
+
 export async function authMiddleware(
   req: Request,
   res: Response,
@@ -19,6 +21,17 @@ export async function authMiddleware(
 
   const [, token] = authHeader.split(' ');
 
+  const blacklistedToken = await JwtBlacklist.findOne({
+    where: { token },
+    attributes: ['id', 'token'],
+  });
+
+  if (blacklistedToken) {
+    return res
+      .status(401)
+      .json({ error: 'Provided token is no longer valid.' });
+  }
+
   try {
     const decoded = await promisify(jwt.verify)(token, tokenSecurityKey);
 
@@ -26,7 +39,6 @@ export async function authMiddleware(
 
     return next();
   } catch (error) {
-    // return res.json({ error });
     return res.status(401).json({ error: 'Invalid token.' });
   }
 }

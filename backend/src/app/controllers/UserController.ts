@@ -21,7 +21,9 @@ class UserController {
       return res.status(400).json({ error: 'Unable to create user' });
     }
 
-    return res.status(200).json({ user });
+    const { id, name, email } = user;
+
+    return res.status(200).json({ user: { id, name, email } });
   }
 
   async listUserLocale(req: SignedRequest, res: Response) {
