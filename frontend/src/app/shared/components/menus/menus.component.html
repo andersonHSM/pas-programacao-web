@@ -1,6 +1,8 @@
 <mat-toolbar class="toolbar" color="primary">
   <mat-toolbar-row>
-    <button mat-button [disableRipple]="true">Trash Mapper</button>
+    <button mat-button [disableRipple]="true" [routerLink]="['']">
+      Trash Mapper
+    </button>
 
     <ng-container *ngIf="!loggedUserInfo">
       <div class="menu-actions">
@@ -22,6 +24,11 @@
 </mat-toolbar>
 
 <mat-menu #userMenu="matMenu">
-  <button mat-menu-item>Meus locais</button>
+  <button
+    mat-menu-item
+    [routerLink]="['/user', loggedUserInfo.id, 'locations']"
+  >
+    Meus locais
+  </button>
   <button mat-menu-item (click)="logout()">Sair</button>
 </mat-menu>

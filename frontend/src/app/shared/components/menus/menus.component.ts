@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
-import { checkUserLoginOnStorage } from '../methods/check-user-login-on-storage';
-import { UserSessionModel } from '../models/user-session.model';
+import { checkUserLoginOnStorage } from '../../methods/check-user-login-on-storage';
+import { UserSessionModel } from '../../models/user-session.model';
 import { SessionService } from 'src/app/services/session.service';
 
 @Component({

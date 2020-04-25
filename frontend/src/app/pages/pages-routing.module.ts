@@ -8,14 +8,12 @@ const routes: Routes = [
     path: '',
     component: PagesComponent,
     children: [
-      { path: '', redirectTo: 'locations', pathMatch: 'full' },
       {
-        path: 'locations',
+        path: '',
         loadChildren: () =>
-          import('./dash/locations/locations.module').then(
-            (module) => module.LocationsModule
-          ),
+          import('./dash/dash.module').then((module) => module.DashModule),
       },
+
       {
         path: 'auth',
         loadChildren: () =>
