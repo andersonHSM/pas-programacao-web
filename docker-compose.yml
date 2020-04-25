@@ -20,7 +20,7 @@ services:
       - 8000:8000
     volumes:
       - ./backend/:/usr/src/app
-    command: bash -c "yarn sequelize-cli db:migrate && yarn start:dev"
+    command: bash -c "yarn sequelize db:migrate && yarn start:dev"
     depends_on:
       - db
     networks:
@@ -42,20 +42,20 @@ services:
     networks:
       - db
 
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: anderson@gmail.com
-  #     PGADMIN_DEFAULT_PASSWORD: 123
-  #     POSTGRES_DB: pas
-  #   ports:
-  #     - 5050:80
-  #   depends_on:
-  #     - db
-  #   volumes:
-  #     - ./db/pgadmin/:/var/lib/pgadmin
-  #   networks:
-  #     - db
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: anderson@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 123
+      POSTGRES_DB: pas
+    ports:
+      - 5050:80
+    depends_on:
+      - db
+    volumes:
+      - ./db/pgadmin/:/var/lib/pgadmin
+    networks:
+      - db
 
 networks:
   db:
