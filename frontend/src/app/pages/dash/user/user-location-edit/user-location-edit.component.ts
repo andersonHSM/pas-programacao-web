@@ -1,45 +1,53 @@
 import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  LocationRequestModel,
+  LocationModel,
+} from 'src/app/shared/models/location.model';
 import {
   MatDialogRef,
   MatDialog,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-} from '@angular/forms';
-import {
-  LocationModel,
-  LocationRequestModel,
-} from 'src/app/shared/models/location.model';
-import { initMap } from 'src/app/shared/models/init-map';
+
 import { LocationsService } from 'src/app/services/locations.service';
+import { initMap } from 'src/app/shared/models/init-map';
 
 @Component({
-  selector: 'app-user-location-create',
-  templateUrl: './user-location-create.component.html',
-  styleUrls: ['./user-location-create.component.scss'],
+  selector: 'app-user-location-edit',
+  templateUrl: './user-location-edit.component.html',
+  styleUrls: ['./user-location-edit.component.scss'],
 })
-export class UserLocationCreateComponent implements OnInit {
+export class UserLocationEditComponent implements OnInit {
   locationForm: FormGroup;
 
   locations: LocationRequestModel[];
 
+  locationId: number | string;
+
   constructor(
-    public dialogRef: MatDialogRef<UserLocationCreateComponent>,
+    public dialogRef: MatDialogRef<UserLocationEditComponent>,
     private readonly formBuilder: FormBuilder,
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly matDialog: MatDialog,
-    private locationService: LocationsService
+    private locationService: LocationsService,
+    @Inject(MAT_DIALOG_DATA) private location: LocationModel
   ) {}
 
   ngOnInit(): void {
+    this.changeDetectorRef.detach();
     this.initForm();
     this.locations = [];
+
+    if (this.location.name && this.location.adress) {
+      this.locationForm.setValue({
+        name: this.location.name,
+        adressRaw: this.location.adress,
+      });
+      this.locationId = this.location.id;
+    }
+
+    this.changeDetectorRef.detectChanges();
   }
 
   initForm(): void {
@@ -51,7 +59,6 @@ export class UserLocationCreateComponent implements OnInit {
 
   geolocateMap() {
     const geocoderService = new google.maps.Geocoder();
-    let id = 0;
 
     geocoderService.geocode(
       { address: this.locationForm.get('adressRaw').value },
@@ -75,8 +82,9 @@ export class UserLocationCreateComponent implements OnInit {
     );
   }
 
-  getLocationToRegister(location: LocationRequestModel) {
-    this.locationService.createLocation(location).subscribe((res) => {
+  update(location: LocationRequestModel) {
+    const { id, ...data } = location;
+    this.locationService.update(this.locationId, data).subscribe((res) => {
       this.matDialog.closeAll();
     });
   }

@@ -3,6 +3,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { checkUserLoginOnStorage } from '../../methods/check-user-login-on-storage';
 import { UserSessionModel } from '../../models/user-session.model';
 import { SessionService } from 'src/app/services/session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menus',
@@ -14,7 +15,8 @@ export class MenusComponent implements OnInit {
 
   constructor(
     private sessionService: SessionService,
-    private readonly changeDetectorRef: ChangeDetectorRef
+    private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +32,9 @@ export class MenusComponent implements OnInit {
       () => {
         window.localStorage.removeItem('userLoginResponseInfo');
         this.loggedUserInfo = checkUserLoginOnStorage();
+      },
+      () => {
+        this.router.navigate(['']);
       }
     );
   }

@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { LocationsRoutingModule } from './locations-routing.module';
 import { LocationsComponent } from './locations.component';
@@ -19,6 +21,7 @@ import { MapCardModule } from '../../../shared/components/map-card/map-card.modu
     LocationsRoutingModule,
     MatCardModule,
     MatDividerModule,
+    MatPaginatorModule,
     MenusModule,
     MapCardModule,
   ],

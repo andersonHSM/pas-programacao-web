@@ -1,10 +1,39 @@
-<ng-container
-  *ngIf="locationsSubscription$ | async as locations; else emptyMessage"
->
-  <ng-container *ngFor="let location of locations">
-    <app-map-card [location]="location"> </app-map-card>
+<div fxLayout="column">
+  <h2>Todos os locais</h2>
+  <ng-container *ngIf="locationsSubscription$ | async as locations">
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayout.lt-md="column center"
+      fxLayoutAlign.lt-md="center center"
+      fxLayoutGap="20px"
+      *ngIf="locations.length > 0; else emptyLocations"
+    >
+      <ng-container *ngFor="let location of locations">
+        <div
+          fxFlex="0 1 calc(33% - 20px)"
+          fxFlex.lt-md="0 1 calc(50% - 20px)"
+          fxFlex.lt-sm="0 1 calc(100% - 20px)"
+        >
+          <app-map-card [location]="location"></app-map-card>
+        </div>
+      </ng-container>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end">
+      <mat-paginator
+        #paginator
+        [length]="locationsLength"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        class="mat-elevation-z4"
+        fxFlex="25"
+        (page)="paginate($event)"
+      ></mat-paginator>
+    </div>
   </ng-container>
-</ng-container>
-<ng-template #emptyMessage>
+</div>
+
+<ng-template #emptyLocations>
   <span>Não existem locais cadastrados</span>
 </ng-template>

@@ -1,1 +1,53 @@
-<p>user-location-view works!</p>
+<div fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <h2>Seus locais</h2>
+    <button
+      (click)="openLocationCreateDialog()"
+      mat-raised-button
+      style="margin-left: auto;"
+      color="primary"
+    >
+      Adcionar
+    </button>
+  </div>
+  <ng-container *ngIf="locations$ | async as locations; else emptyLocations">
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayout.lt-md="column"
+      fxLayoutAlign.lt-md="center"
+      *ngIf="locations.length > 0; else emptyLocations"
+    >
+      <ng-container *ngFor="let location of locations">
+        <div
+          class="card-wrapper"
+          fxFlex="0 1 calc(33% - 20px)"
+          fxFlex.lt-md="0 1 calc(50% - 20px)"
+          fxFlex.lt-sm="0 1 calc(100% - 20px)"
+        >
+          <app-map-card
+            (locationToDeleteEmitter)="deleteLocation($event)"
+            (locationToEditEmitter)="openLocationEditDialog($event)"
+            [location]="location"
+          ></app-map-card>
+        </div>
+      </ng-container>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end" *ngIf="locations.length > 0">
+      <mat-paginator
+        #paginator
+        [length]="locationsLength"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        class="mat-elevation-z4"
+        fxFlex="25"
+        (page)="paginate($event)"
+      ></mat-paginator>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyLocations>
+    <span>Não há locais cadastrados.</span>
+  </ng-template>
+</div>

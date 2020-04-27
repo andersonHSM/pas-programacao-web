@@ -3,15 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user.component';
-import { UserLocationViewComponent } from './user-location-view/user-location-view.component';
-import { UserLocationCreateComponent } from './user-location-create/user-location-create.component';
 
+import { UserLocationViewModule } from './user-location-view/user-location-view.module';
 
 @NgModule({
-  declarations: [UserComponent, UserLocationViewComponent, UserLocationCreateComponent],
-  imports: [
-    CommonModule,
-    UserRoutingModule
-  ]
+  declarations: [UserComponent],
+  imports: [CommonModule, UserRoutingModule, UserLocationViewModule],
 })
-export class UserModule { }
+export class UserModule {}

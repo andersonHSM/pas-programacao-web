@@ -24,11 +24,13 @@
 </mat-toolbar>
 
 <mat-menu #userMenu="matMenu">
-  <button
-    mat-menu-item
-    [routerLink]="['/user', loggedUserInfo.id, 'locations']"
-  >
-    Meus locais
-  </button>
-  <button mat-menu-item (click)="logout()">Sair</button>
+  <ng-template matMenuContent>
+    <button
+      mat-menu-item
+      [routerLink]="['/user', loggedUserInfo?.id, 'locations']"
+    >
+      Meus locais
+    </button>
+    <button mat-menu-item (click)="logout()">Sair</button>
+  </ng-template>
 </mat-menu>
