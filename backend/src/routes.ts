@@ -18,7 +18,7 @@ routes.use(authMiddleware);
 
 routes.post('/logout/', jwtBlacklistController.create);
 
-routes.get('/user/:id/locations/', UserController.listUserLocale);
+routes.get('/user/:id/locations/', LocationController.listLocaleByUser);
 
 routes.post('/locations/', LocationController.store);
 routes.patch('/locations/:id/', LocationController.update);

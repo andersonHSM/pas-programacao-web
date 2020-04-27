@@ -40,23 +40,18 @@ class LocationController {
   async index(req: Request, res: Response) {
     const { page, limit } = paginatorParams(req);
 
-    const locationsList = await Locations.findAll({
+    const {
+      rows: locationsList,
+      count: total,
+    } = await Locations.findAndCountAll({
       where: { active: true },
       offset: (page - 1) * limit,
       limit: limit,
       order: ['id'],
-      attributes: [
-        'id',
-        'name',
-        'type',
-        'longitude',
-        'latitude',
-        'adress',
-        'user_id',
-      ],
+      attributes: ['id', 'name', 'type', 'longitude', 'latitude', 'adress'],
     });
 
-    return res.status(200).json({ locationsList });
+    return res.status(200).json({ locationsList, total, pageSize: limit });
   }
 
   async update(req: SignedRequest, res: Response) {
@@ -153,6 +148,46 @@ class LocationController {
     }
 
     return res.status(200).json({ sucess: 'Location successfully deleted.' });
+  }
+
+  async listLocaleByUser(req: SignedRequest, res: Response) {
+    const { id: paramId } = req.params;
+
+    const { page, limit } = paginatorParams(req);
+
+    // const user = await Users.findAll({
+    //   where: { id: paramId },
+    //   attributes: ['id', 'name', 'email'],
+    //   order: [['locations', 'id', 'asc']], // ordenação do relacionamento 'locations'
+    //   include: [
+    //     {
+    //       model: Locations,
+    //       where: { user_id: paramId },
+    //       as: 'locations',
+    //       attributes: ['id', 'name', 'latitude', 'longitude', 'type', 'adress'],
+    //     },
+    //   ],
+    // });
+
+    const {
+      rows: locationsList,
+      count: total,
+    } = await Locations.findAndCountAll({
+      where: { user_id: paramId },
+      offset: (page - 1) * limit,
+      limit: limit,
+      attributes: [
+        'id',
+        'name',
+        'latitude',
+        'longitude',
+        'type',
+        'adress',
+        'user_id',
+      ],
+    });
+
+    return res.json({ locationsList, total, pageSize: limit });
   }
 }
 

@@ -25,26 +25,6 @@ class UserController {
 
     return res.status(200).json({ user: { id, name, email } });
   }
-
-  async listUserLocale(req: SignedRequest, res: Response) {
-    const { id: paramId } = req.params;
-
-    const user = await Users.findAll({
-      where: { id: paramId },
-      attributes: ['id', 'name', 'email'],
-      order: [['locations', 'id', 'asc']], // ordenação do relacionamento 'locations'
-      include: [
-        {
-          model: Locations,
-          where: { user_id: paramId },
-          as: 'locations',
-          attributes: ['id', 'name', 'latitude', 'longitude', 'type', 'adress'],
-        },
-      ],
-    });
-
-    return res.json({ user });
-  }
 }
 
 export default new UserController();
