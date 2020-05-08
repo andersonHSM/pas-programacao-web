@@ -6,7 +6,7 @@ COPY package.json ./
 
 RUN ["npm", "install", "-g", "@angular/cli"]
 
-RUN "yarn"
+RUN ["npm", "i"]
 
 COPY . .
 
